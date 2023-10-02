@@ -1,1 +1,9 @@
+spring:
+  application:
+    name: spring-boot-observability
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
