@@ -37,6 +37,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- this dependency for exposing prometheus metrics via actuator -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
