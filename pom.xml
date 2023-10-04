@@ -37,11 +37,10 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- this dependency for exposing prometheus metrics via actuator -->
+		<!-- this dependency for sending metrics from actuator to openTelemetry collector -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<scope>runtime</scope>
+			<artifactId>micrometer-registry-otlp</artifactId>
 		</dependency>
 
 	</dependencies>

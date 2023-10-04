@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     ports:
       - '9090:9090'
-    extra_hosts:
-      - host.docker.internal:host-gateway
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
@@ -24,3 +22,17 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.86.0
+    volumes:
+      - ./volumes/collector/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    restart: unless-stopped
+    ports:
+      - '1888:1888' # pprof extension
+      - '8888:8888' # Prometheus metrics exposed by the collector
+      - '8889:8889' # Prometheus exporter metrics
+      - '13133:13133' # health_check extension
+      - '4317:4317' # OTLP gRPC receiver
+      - '4318:4318' # OTLP http receiver
+      - '55679:55679' # zpages extension
