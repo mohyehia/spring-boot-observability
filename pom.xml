@@ -43,6 +43,17 @@
 			<artifactId>micrometer-registry-otlp</artifactId>
 		</dependency>
 
+		<!-- the below 2 dependencies are for enabling Tracing with OpenTelemetry and reporting using OTLP -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
