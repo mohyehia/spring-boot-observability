@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/trace")
     public String trace() {
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://httpbin.org/post", "Hello, Actuator", String.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity("https://httpbin.org/post", "Hello, Actuator", String.class);
         return responseEntity.getBody();
     }
 }
