@@ -26,6 +26,7 @@ services:
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.86.0
+    container_name: otel-collector
     volumes:
       - ./volumes/collector/otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
     restart: unless-stopped
@@ -47,9 +48,18 @@ services:
 
   tempo:
     image: grafana/tempo:latest
+    container_name: tempo
     command: [ "-config.file=/etc/tempo.yml" ]
     volumes:
       - ./volumes/tempo-config/tempo.yml:/etc/tempo.yml
     ports:
       - '3200:3200'   # tempo
       - '4317'  # otlp grpc
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    command:
+      - -config.file=/etc/loki/local-config.yaml
+    ports:
+      - '3100:3100'

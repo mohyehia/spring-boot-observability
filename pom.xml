@@ -54,6 +54,13 @@
 			<artifactId>opentelemetry-exporter-otlp</artifactId>
 		</dependency>
 
+		<!-- the below dependency is for loki log aggregation -->
+		<dependency>
+			<groupId>com.github.loki4j</groupId>
+			<artifactId>loki-logback-appender</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
