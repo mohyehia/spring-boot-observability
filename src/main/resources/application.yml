@@ -6,7 +6,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, prometheus
+        include: health, info, prometheus, metrics
   endpoint:
     health:
       probes:
@@ -17,6 +17,16 @@ management:
   otlp:
     tracing:
       endpoint: http://localhost:4318/v1/traces
+
+  metrics:
+    tags:
+      department: ${SERVICE_DEPARTMENT:Software Development}
+      team: ${SERVICE_TEAM:Observability}
+      service: ${spring.application.name}
+      env: ${SERVICE_ENVIRONMENT:dev}
+      region: ${SERVICE_REGION:us-east1}
+      instance.id: ${SERVICE_INSTANCE_ID:${random.uuid}}
+
 
 logging:
   pattern:
