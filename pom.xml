@@ -37,6 +37,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<!-- this dependency for sending metrics from actuator to prometheus -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
