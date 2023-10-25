@@ -12,6 +12,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./volumes/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./volumes/prometheus/alerting-rules.yml:/etc/prometheus/alerting-rules.yml
 
   grafana:
     image: grafana/grafana-oss:10.1.2
@@ -25,6 +26,21 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
+
+  alert-manager:
+    image: bitnami/alertmanager:latest
+    container_name: alert-manager
+    ports:
+      - '9093:9093'
+    volumes:
+      - ./volumes/alert-manager/config.yml:/opt/bitnami/alertmanager/conf/config.yml
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - '1025:1025' # SMTP server port
+      - '8025:8025' # HTTP server port
 
   otel-collector:
     image: otel/opentelemetry-collector-contrib:0.86.0

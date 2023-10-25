@@ -9,3 +9,12 @@ scrape_configs:
       - targets: ['host.docker.internal:8080']
         labels:
           application: 'Spring Boot Observability'
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: ['alert-manager:9093']
+
+rule_files:
+  - alerting-rules.yml
