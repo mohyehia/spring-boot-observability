@@ -6,11 +6,12 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info, prometheus, metrics
+        include: health, info, prometheus, metrics, beans, mappings
   endpoint:
     health:
       probes:
         enabled: true
+      show-details: always
   tracing:
     sampling:
       probability: 1.0
@@ -27,7 +28,15 @@ management:
       region: ${SERVICE_REGION:us-east1}
       instance.id: ${SERVICE_INSTANCE_ID:${random.uuid}}
 
-
+  info:
+    env:
+      enabled: true
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: This is a demo for spring boot 3 observability
+    version: 1.0.0
