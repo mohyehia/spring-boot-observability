@@ -12,6 +12,16 @@ management:
       probes:
         enabled: true
       show-details: always
+      status:
+        http-mapping:
+          down: 503
+          out-of-service: 503
+          fatal: 500
+      group:
+        external-services:
+          include:
+            - postApi
+            - db
   tracing:
     sampling:
       probability: 1.0

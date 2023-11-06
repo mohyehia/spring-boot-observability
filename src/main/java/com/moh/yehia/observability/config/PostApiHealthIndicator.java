@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-
 @Component
 @RequiredArgsConstructor
 @Log4j2
@@ -25,18 +23,20 @@ public class PostApiHealthIndicator implements HealthIndicator {
         try {
             ResponseEntity<Post[]> response = restTemplate.getForEntity(URL, Post[].class);
             if (response.getStatusCode() == HttpStatus.OK) {
-                return Health.up().build();
+                return Health.up()
+                        .withDetail("success", true)
+                        .build();
             } else {
                 return Health.down()
                         .withDetail("ping_url", URL)
-                        .withDetail("ping_time", new Date())
+                        .withDetail("error_code", response.getStatusCode())
                         .build();
             }
         } catch (RestClientException e) {
             log.error(e.getMessage(), e);
             return Health.down()
                     .withDetail("ping_url", URL)
-                    .withDetail("ping_time", new Date())
+                    .withDetail("error", e.getMessage())
                     .build();
         }
     }
