@@ -2,6 +2,7 @@ spring:
   application:
     name: spring-boot-observability
 
+
 management:
   endpoints:
     web:
@@ -25,11 +26,13 @@ management:
   tracing:
     sampling:
       probability: 1.0
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
 
   metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
     tags:
       department: ${SERVICE_DEPARTMENT:Software Development}
       team: ${SERVICE_TEAM:Observability}
@@ -50,3 +53,5 @@ info:
     name: ${spring.application.name}
     description: This is a demo for spring boot 3 observability
     version: 1.0.0
+server:
+  port: 8081

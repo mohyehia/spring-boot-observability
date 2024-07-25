@@ -13,6 +13,9 @@ datasources:
     editable: false
     jsonData:
       httpMethod: GET
+      exemplarTraceIdDestinations:
+        - name: trace_id
+          datasourceUid: tempo
 
   - name: Loki
     type: loki
@@ -24,6 +27,13 @@ datasources:
     isDefault: false
     version: 1
     editable: true
+    jsonData:
+      maxLines: 50
+      derivedFields:
+        - dataSourceUid: tempo
+          matcherRegex: '.+ --- \[.+\] \[.+\] \[(\w*)-\w*\] .+'
+          name: traceId
+          url: $${__value.raw}
 
   - name: Tempo
     type: tempo
