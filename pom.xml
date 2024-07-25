@@ -98,10 +98,17 @@
 					<execution>
 						<goals>
 							<goal>build-image-no-fork</goal>
+							<goal>build-info</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>io.github.git-commit-id</groupId>
+				<artifactId>git-commit-id-maven-plugin</artifactId>
+			</plugin>
+
 		</plugins>
 	</build>
 

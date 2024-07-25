@@ -2,6 +2,8 @@ spring:
   application:
     name: spring-boot-observability
 
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
 
 management:
   endpoints:
@@ -33,6 +35,15 @@ management:
         http:
           server:
             requests: true
+      percentiles:
+#        all: 0.99, 0.5
+        posts:
+          findAll.time: 0.99, 0.5
+          save.time: 0.99, 0.5
+          findById.time: 0.99, 0.5
+          update.time: 0.99, 0.5
+          deleteById.time: 0.99, 0.5
+
     tags:
       department: ${SERVICE_DEPARTMENT:Software Development}
       team: ${SERVICE_TEAM:Observability}
@@ -44,6 +55,14 @@ management:
   info:
     env:
       enabled: true
+    git:
+      enabled: true
+      mode: full
+    os:
+      enabled: true
+    java:
+      enabled: true
+
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
@@ -53,5 +72,7 @@ info:
     name: ${spring.application.name}
     description: This is a demo for spring boot 3 observability
     version: 1.0.0
+
 server:
   port: 8081
+  shutdown: graceful
