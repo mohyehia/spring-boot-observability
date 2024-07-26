@@ -75,3 +75,24 @@ services:
       - -config.file=/etc/loki/local-config.yaml
     ports:
       - '3100:3100'
+
+  promtail:
+    image: grafana/promtail:main
+    container_name: promtail
+    volumes:
+      - ./volumes/promtail/promtail.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/docker-config.yaml
+    restart: unless-stopped
+
+  spring-boot-observability:
+    image: mohyehia99/spring-boot-observability:0.0.1
+    container_name: spring-boot-observability
+    ports:
+      - '8081:8081'
+    restart: unless-stopped
+    labels:
+      collect_logs: "promtail"
+    environment:
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://tempo:9411/api/v2/spans

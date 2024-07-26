@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.moh.yehia.observability</groupId>
 	<artifactId>spring-boot-observability</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>spring-boot-observability</name>
 	<description>spring-boot-observability</description>
 	<properties>
@@ -61,11 +61,10 @@
 			<version>2.16.3</version>
 		</dependency>
 
-		<!-- the below dependency is for loki log aggregation -->
 		<dependency>
-			<groupId>com.github.loki4j</groupId>
-			<artifactId>loki-logback-appender</artifactId>
-			<version>1.4.1</version>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>7.4</version>
 		</dependency>
 
 		<dependency>
@@ -87,6 +86,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<env>
+							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+						</env>
+						<name>mohyehia99/${project.name}:${project.version}</name>
+						<publish>false</publish>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
