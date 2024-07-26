@@ -19,7 +19,7 @@ scrape_configs:
     relabel_configs:
       - source_labels: [ '__meta_docker_container_name' ]
         regex: '/(.*)'
-        target_label: 'app'
+        target_label: 'application'
       - source_labels: [ '__meta_docker_container_log_stream' ]
         target_label: 'logstream'
     pipeline_stages:
@@ -39,3 +39,4 @@ scrape_configs:
           level:
           traceId:
           spanId:
+          application:

@@ -48,12 +48,27 @@ datasources:
     uid: tempo
     jsonData:
       httpMethod: GET
-      serviceMap:
+      tracesToMetrics:
         datasourceUid: prometheus
-      tracesToLogsV2:
+        tags: [{ key: 'service.name', value: 'application' }, { key: 'method' }, { key: 'uri' }, { key: 'status' }, { key: 'exception' }]
+        queries:
+          - name: 'Throughput'
+            query: 'sum(rate(http_server_requests_seconds_count{$$__tags}[$$__rate_interval]))'
+          - name: 'Latency'
+            query: 'histogram_quantile(1.00, sum(rate(http_server_requests_seconds_bucket{$$__tags}[$$__rate_interval])) by (le))'
+        spanStartTimeShift: '-10m'
+        spanEndTimeShift: '10m'
+      tracesToLogs:
         datasourceUid: loki
-        spanStartTimeShift: '-1h'
-        spanEndTimeShift: '1h'
+        spanStartTimeShift: '-10m'
+        spanEndTimeShift: '10m'
         filterByTraceID: true
         filterBySpanID: true
-        tags: [{key: 'service.name', value: 'app'}]
+        mappedTags: [{ key: 'service.name', value: 'application' }]
+        mapTagNamesEnabled: true
+      lokiSearch:
+        datasourceUid: loki
+      serviceMap:
+        datasourceUid: prometheus
+      nodeGraph:
+        enabled: true
