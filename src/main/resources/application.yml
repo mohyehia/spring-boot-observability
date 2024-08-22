@@ -76,3 +76,12 @@ info:
 server:
   port: 8081
   shutdown: graceful
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+  api-docs:
+    enabled: true
+    path: /api-docs
+
